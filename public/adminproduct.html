@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+          crossorigin="anonymous"/>
+    <link rel="stylesheet" href=""/>
+</head>
+<body>
+<h1>Ventas</h1>
+
+<div class="py-4">
+    <h2>Productos</h2>
+    <hr class="w-50"/>
+
+    <table class="table w-50 m-auto">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Imagen</th>
+            <th scope="col">Categoría ID</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"
+        integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    const tbody = document.querySelector("#tbody");
+
+    const getProducts = async () => {
+    try {
+        const response = await axios.get("/todosproductos");
+        const products = response.data.productos || []; 
+        return products;
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        return []; // Return an empty array in case of an error
+    }
+};
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const products = await getProducts();
+        tbody.innerHTML = "";
+        products.forEach((product) => {
+            const deleteButtonHtml = `<button type="button" class="btn btn-danger" onclick="deleteProduct(${product.id})">Eliminar</button>`;
+            tbody.innerHTML += `
+                <tr>
+                    <th scope="row">${product.id}</th>
+                    <td>${product.nombre}</td>
+                    <td>${product.descripcion}</td>
+                    <td>${product.precio}</td>
+                    <td><img src="${product.imagen_url}" alt="Product Image" style="max-width: 100px;"></td>
+                    <td>${product.categoria_id}</td>
+                    <td>${deleteButtonHtml}</td>
+                </tr>`;
+        });
+        checkboxListeners(); // Assuming checkboxListeners is defined elsewhere
+    } catch (error) {
+        console.error("Error loading products:", error);
+    }
+});
+
+const deleteProduct = async (productId) => {
+    try {
+        await axios.delete(`/adminproductos/${productId}`); // Assuming the delete endpoint is /productos/:id
+        console.log(`Product with ID ${productId} deleted.`);
+        // Optionally, you can reload the table after deletion
+        location.reload();
+    } catch (error) {
+        console.error("Error deleting product:", error);
+    }
+};
+</script>
+</body>
+</html>

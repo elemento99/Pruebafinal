@@ -15,20 +15,39 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname,  'public')));
 
+app.get('/', (req, res)=>{
+    res.sendFile('index.html');
+});
 
 //login
 app.post('/login', ventasController.login);
 app.get('/login', (req, res)=>{
-    res.sendFile('/login.html');
+    res.sendFile('login.html');
 });
+
+//register
 app.post('/register', ventasController.register);
 app.get('/register', (req, res)=>{
-    res.sendFile('/register.html');})
+    res.sendFile('register.html');})
+
+app.get('/todosproductos', ventasController.getAllProducts)
+
+app.get('/adminproductos', (req, res)=>{
+    res.sendFile(path.join(__dirname,  'public', '/adminproduct.html'))
+})
+
+app.get('/productos', (req, res)=>{
+        res.sendFile('/productos.html');})
+
+app.post('/productos/nuevo', ventasController.registerProduct);
+
+app.delete('/adminproductos/:id', ventasController.deleteProduct);
 
 
-app.get('/', (req, res)=>{
-    res.sendFile('index.html');
-});
+
+
+
+
 
 app.listen(PORT, ()=>{
     console.log(`Server up on http://localhost:${PORT}`);
