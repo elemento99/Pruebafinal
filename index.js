@@ -4,6 +4,7 @@ import fileUpload from "express-fileupload";
 import { ventasController } from './controllers/ventas.controller.js';
 import path from 'path';
 import { verifyTokenJWT } from './middlewares/jwt.middleware.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,7 +21,7 @@ app.post('/login', ventasController.login);
 app.get('/login', (req, res)=>{
     res.sendFile('/login.html');
 });
-app.post('/register', ventasController.login);
+app.post('/register', ventasController.register);
 app.get('/register', (req, res)=>{
     res.sendFile('/register.html');})
 

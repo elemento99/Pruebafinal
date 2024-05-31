@@ -37,9 +37,37 @@ const login = async(req, res)=>{
         return res.status(code).json({ok: false, msg});
     }
 }
+const register = async(req, res) => {
+    try {
+        const { username, email, password } = req.body;
+        console.log({ username, email, password });
 
+        const existingUser = await ventasModel.findEmail(email);
+        if (existingUser) {
+            throw { code: 400, msg: 'El usuario ya existe!' };
+        }
+
+        const user = await ventasModel.create({ username, email, password });
+
+        const token = jwt.sign(
+            { email: user.email },
+            process.env.SECRET_JWT,
+            { expiresIn: '1h' }
+        );
+        return res.cookie('token', token, { httpOnly: true }).json({ token, email: user.email });
+    } catch (error) {
+        console.error(error);
+
+        // Asignar un código de estado HTTP válido
+        const statusCode = error.code >= 100 && error.code < 600 ? error.code : 500; // Default to 500 if no valid code is specified
+        const errorMsg = error.msg || 'Internal Server Error';
+
+        return res.status(statusCode).json({ ok: false, msg: errorMsg });
+    }
+};
 
 
 export const ventasController = {
-login
+login,
+register
 }

@@ -22,11 +22,10 @@ El archivo para inicilizar la base de datos está en: `database/queries.sql`
 ## packages
 -Nodemon
 -Express-fileupload
--Jwt
--Bcrypt
--HandleBars
+-jsonwebtoken
 -Path
 -Express
+-Url
 
 
 
