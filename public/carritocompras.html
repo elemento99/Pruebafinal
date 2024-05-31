@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Carrito de Compras</h1>
+
+        <div id="cartItems" class="row"></div>
+
+        <div class="mt-4">
+            <button id="btnCheckout" class="btn btn-primary">Realizar Compra</button>
+        </div>
+    </div>
+
+    <script>
+        // Simulación de productos obtenidos del sessionStorage (reemplaza con tu lógica real)
+        const productsInCart = JSON.parse(sessionStorage.getItem('cartProducts')) || [];
+
+        // Función para mostrar los productos en el carrito
+        const displayProducts = () => {
+            const cartItemsContainer = document.getElementById('cartItems');
+            cartItemsContainer.innerHTML = '';
+
+            productsInCart.forEach(product => {
+                const cardHtml = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.nombre}</h5>
+                                <p class="card-text">Descripción: ${product.descripcion}</p>
+                                <p class="card-text">Precio: ${product.precio}</p>
+                                <button class="btn btn-danger" onclick="removeProduct(${product.id})">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.innerHTML += cardHtml;
+            });
+        };
+
+        // Función para eliminar un producto del carrito
+        const removeProduct = (productId) => {
+            const updatedCart = productsInCart.filter(product => product.id !== productId);
+            sessionStorage.setItem('cartProducts', JSON.stringify(updatedCart));
+            displayProducts();
+        };
+
+        // Función para realizar la compra
+        const checkout = () => {
+            // Aquí puedes agregar la lógica para enviar los productos al servidor y procesar la compra
+            alert('Compra realizada correctamente');
+            sessionStorage.removeItem('cartProducts');
+            displayProducts(); // Actualizar la vista del carrito después de la compra
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayProducts();
+
+            const btnCheckout = document.getElementById('btnCheckout');
+            btnCheckout.addEventListener('click', checkout);
+        });
+    </script>
+</body>
+</html>

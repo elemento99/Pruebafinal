@@ -1,0 +1,77 @@
+.login-container {
+    
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+    }
+    .login-container h1, .login-container h2 {
+        text-align: center;
+    }
+    .login-container .form-control {
+        margin-bottom: 15px;
+    }
+    .login-container hr {
+        margin: 20px 0;
+    }
+
+
+
+.register-container {
+    
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.register-container h1, .register-container h2 {
+    text-align: center;
+}
+
+.register-container .form-control {
+    margin-bottom: 15px;
+}
+
+.register-container hr {
+    margin: 20px 0;
+}
+
+
+
+.productonuevo-container {
+    max-width: 500px;
+    /* Centra el contenedor horizontalmente en la página */
+    margin: 0 auto;
+    /* Agrega relleno interno al contenedor */
+    padding: 30px;
+    /* Agrega un borde sólido de 1px */
+    border: 1px solid #ddd;
+    /* Agrega bordes redondeados */
+    border-radius: 10px;
+    /* Agrega sombra al contenedor */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Agrega un color de fondo */
+    background-color: #f9f9f9;
+}
+
+/* Centra el texto h1 y h2 */
+.productonuevo-container h1, .productonuevo-container h2 {
+    text-align: center;
+}
+
+/* Ajusta el margen inferior de los elementos del formulario */
+.productonuevo-container .form-group {
+    margin-bottom: 15px;
+}
+
+/* Ajusta el margen de la línea horizontal */
+.productonuevo-container hr {
+    margin: 20px 0;
+}

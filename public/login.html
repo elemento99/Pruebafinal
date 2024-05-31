@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+
+    <div class="login-container bg-tartary">
+        <h1>Login</h1>
+        <div class="py-5">
+            <h2>Iniciar Sesión</h2>
+            <hr class="w-50 mx-auto" />
+            <form id="loginForm" action="/login" method="POST" style="text-align: center;">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input name="email" id="email" class="form-control w-50 m-auto" />
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input name="password" id="password" type="password" class="form-control w-50 m-auto" />
+                </div>
+                <button type="submit" class="btn btn-outline-light bg-dark mt-3">Ingresar</button>
+                <p class="mt-3">¿Aún no tienes cuenta? <a href="/register">Regístrate</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+
+            // Send the form data using fetch
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email, password: password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful login, redirect, and show alert
+                    console.log('Login successful');
+                    alert('Redirigiendo a la tienda...');
+                    window.location.href = '/productos';
+                } else {
+                    // Handle errors, display messages, etc.
+                    alert('Login failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

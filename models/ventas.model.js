@@ -45,6 +45,18 @@ const allProducts = async () => {
     const { rows } = await pool.query(query);
     return rows;
 }
+
+const productById = async (productId) => {
+    const query = {
+        text: `SELECT * FROM productos WHERE id = $1;`,
+        values: [productId]
+    };
+
+    const { rows } = await pool.query(query);
+    return rows[0]; 
+};
+
+
 const removeProduct = async(id)=>{
     const query = {
         text: `DELETE FROM productos WHERE id = $1 RETURNING *;`,
@@ -61,5 +73,6 @@ export const ventasModel = {
     create,
     createProduct,
     allProducts,
-    removeProduct
+    removeProduct,
+    productById
 }

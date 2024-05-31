@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+  
+    <nav class="navbar navbar-expand-lg bg-info">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Inicio</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+              </li>
+            </ul>
+          
+              
+                <button type="button" class="btn btn-primary position-relative">
+                    Profile
+                    <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                      <span class="visually-hidden">New alerts</span>
+                    </span>
+                  </button>
+          </div>
+        </div>
+      </nav>
+
+  
+      <div class="mb-5">
+        <div class="productonuevo-container ">
+          <h1>Nuevo Producto</h1>
+          <form id="productoNuevoForm" enctype="multipart/form-data">
+              <div class="form-group">
+                  <label>Nombre del Producto</label>
+                  <input name="nombre" class="form-control" />
+              </div>
+              <div class="form-group">
+                  <label>Descripción del Producto</label>
+                  <textarea name="descripcion" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                  <label>Precio del Producto</label>
+                  <input name="precio" class="form-control" />
+              </div>
+              <div class="form-group">
+                  <label>Categoría</label>
+                  <input name="categoria" class="form-control" />
+              </div>
+              <div class="form-group">
+                  <label>Imagen del Producto</label>
+                  <input id="imagen" name="imagen" type="file" class="form-control-file" />
+              </div>
+              <button class="btn btn-dark mb-5">Agregar Producto</button>
+          </form>
+      </div>
+    
+      </div>
+
+
+      <footer class="bg-dark fixed-bottom">
+        <div class="container p-2">
+            <div class="row">
+                    <h2 class="titulofooter text-info text-start">Logo</h2>
+                    <div class="col-md-3 text-info">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-square-twitter"></i>
+                    </div>
+            </div>
+        </div>
+      </footer>
+     
+    
+    
+  </body>
+
+
+
+
+      <script>
+      
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+        src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"
+        integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      </script>
+  
+      <script>
+
+    
+        const registerForm = document.querySelector("#registerForm");
+  
+        registerForm.addEventListener("submit", async (e) => {
+          try {
+            e.preventDefault();
+  
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+            const r_password = e.target.r_password.value;
+            const name = e.target.name.value;
+            const anos_experiencia = e.target.anos_experiencia.value;
+            const especialidad = e.target.especialidad.value;
+            const foto = e.target.foto.value;
+  
+            const formData = new FormData(registerForm);
+  
+            if (
+              !email.trim() ||
+              !password.trim() ||
+              !r_password.trim() ||
+              !name.trim() ||
+              !anos_experiencia.trim() ||
+              !especialidad.trim() ||
+              !foto
+            ) {
+              alert("Faltan datos por ingresar en el formulario!");
+              throw { msg: "Faltan datos por ingresar en el formulario!" };
+            }
+  
+            if (password != r_password) {
+              alert("La contraseña no coincide!");
+              throw { msg: "La contraseña no coincide!" };
+            }
+  
+            const { data } = await axios.post("/skater/register", formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            });
+  
+            localStorage.setItem('email', email);
+  
+            window.location.href = "/profile.html";
+          } catch (error) {
+            console.error(error.msg);
+            alert(error.msg);
+          }
+        });
+ 
+
+
+</script>
+
+</html>

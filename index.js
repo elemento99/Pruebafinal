@@ -16,35 +16,42 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname,  'public')));
 
 app.get('/', (req, res)=>{
-    res.sendFile('index.html');
-});
+    res.sendFile(path.join(__dirname,  'public', '/home.html'))})
 
 //login
 app.post('/login', ventasController.login);
 app.get('/login', (req, res)=>{
-    res.sendFile('login.html');
-});
+    res.sendFile(path.join(__dirname,  'public', '/login.html'))})
+
 
 //register
 app.post('/register', ventasController.register);
 app.get('/register', (req, res)=>{
-    res.sendFile('register.html');})
+    res.sendFile(path.join(__dirname,  'public', '/register.html'))})
 
+
+//rutas necesarias para todos
 app.get('/todosproductos', ventasController.getAllProducts)
+app.get('/productos/:id', ventasController.productById)
 
+
+//rutas para usuarios normales
+app.get('/productos', (req, res)=>{
+    res.sendFile(path.join(__dirname,  'public', '/productos.html'))})
+
+
+app.get('/compras', (req, res)=>{
+    res.sendFile(path.join(__dirname,  'public', '/carritocompras.html'))})
+
+//rutas solo para admin
 app.get('/adminproductos', (req, res)=>{
     res.sendFile(path.join(__dirname,  'public', '/adminproduct.html'))
 })
 
-app.get('/productos', (req, res)=>{
-        res.sendFile('/productos.html');})
-
 app.post('/productos/nuevo', ventasController.registerProduct);
 
+
 app.delete('/adminproductos/:id', ventasController.deleteProduct);
-
-
-
 
 
 

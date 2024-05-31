@@ -111,10 +111,26 @@ const deleteProduct = async (req, res) => {
     }
 };
 
+const productById = async (req, res) => {
+    try {
+        const productId = req.params.id; 
+        const producto = await ventasModel.productById(productId); 
+        if (!producto) {
+            return res.status(404).json({ ok: false, msg: 'Producto no encontrado' });
+        }
+        return res.json({ ok: true, producto });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ ok: false, msg: 'Error interno del servidor' });   
+    }
+}
+
+
 export const ventasController = {
 login,
 register,
 registerProduct,
 getAllProducts,
-deleteProduct
+deleteProduct,
+productById
 }
